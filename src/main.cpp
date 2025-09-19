@@ -121,7 +121,14 @@ void draw_grid(){
     }
 }
 
-
+void draw_rectangle(int posx, int posy, int width, int height, uint32_t color){
+    if(!color_buffer) return;
+    for(int y = posx; y < posx + width; y++){
+        for(int x = posy ; x < posy + height; x++){
+            color_buffer[(window_width * y) + x] = color;
+        }
+    } 
+}
 
 
 void clear_color_buffer(uint32_t color) {
@@ -132,7 +139,7 @@ void clear_color_buffer(uint32_t color) {
         }
     }
 
-    draw_grid();
+    draw_rectangle(4, 34, 10, 10, 0xFFFF0000);
 }
 
 void render_color_buffer() {
