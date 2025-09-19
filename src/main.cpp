@@ -33,8 +33,8 @@ bool initialize_window() {
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
     
-    window_width = displayMode.w;
-    window_height = displayMode.h;
+    //window_width = displayMode.w;
+    //window_height = displayMode.h;
 
     window = SDL_CreateWindow(
         "Software Renderer",
@@ -114,7 +114,7 @@ void update() {
 void draw_grid(){
     for(int i = 0; i < window_height; i++) {
         for(int j = 0; j < window_width; j++) {
-            if (i % 100 == 0 ||  j % 10 == 0){
+            if (i % 10 == 0 ||  j % 10 == 0){
                 color_buffer[window_width * i + j] = 0x00000000;
             }
         }
