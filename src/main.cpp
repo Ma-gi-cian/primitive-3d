@@ -1,4 +1,5 @@
 #include <SDL2/SDL_pixels.h>
+#include <cstdint>
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -98,6 +99,31 @@ void process_input() {
 void update() {
 }
 
+// Beautiful dots are drawn using this code.
+// void draw_points() {
+//     for(int i = 0; i<window_height; i++) {
+//         for(int j = 0; j < window_width; j++){
+//             if (i % 10 == 0 && j % 10 == 0) {
+//                 color_buffer[(window_width * i) + j ] = 0x00000000;
+//             }
+//         }
+//     }
+// }
+
+// works
+void draw_grid(){
+    for(int i = 0; i < window_height; i++) {
+        for(int j = 0; j < window_width; j++) {
+            if (i % 100 == 0 ||  j % 10 == 0){
+                color_buffer[window_width * i + j] = 0x00000000;
+            }
+        }
+    }
+}
+
+
+
+
 void clear_color_buffer(uint32_t color) {
     if (!color_buffer) return;
     for (int y = 0; y < window_height; y++) {
@@ -105,6 +131,8 @@ void clear_color_buffer(uint32_t color) {
             color_buffer[(window_width * y) + x] = color;
         }
     }
+
+    draw_grid();
 }
 
 void render_color_buffer() {
