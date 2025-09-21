@@ -1,1 +1,0 @@
-/usr/bin/c++ "CMakeFiles/primitive-3d.dir/src/Stage/Stage.cpp.o" "CMakeFiles/primitive-3d.dir/src/main.cpp.o" -o /home/jha/workspace/projects/primitive-3d/primitive-3d  /usr/lib/x86_64-linux-gnu/libSDL2.so 
