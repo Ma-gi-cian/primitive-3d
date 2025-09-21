@@ -21,3 +21,9 @@ void Primitive::drawSquare(int rect_x, int rect_y, int rect_width, int rect_heig
         }
     }
 }
+
+void Primitive::drawPixel(int posx, int posy, uint32_t color){
+    if (posx, posy >= 0 && posx < buffer_width && posy < buffer_height) {
+        target_buffer[(buffer_width * posy) + posx] = color;
+    }
+}

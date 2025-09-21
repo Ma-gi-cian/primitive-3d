@@ -25,7 +25,6 @@ private:
     void render();           
     void cleanup();          
 
-    void drawSquare(int posx, int posy, int width, int height, uint32_t color);
 
     bool is_running = false;
     int window_width = 800;

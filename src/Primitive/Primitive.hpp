@@ -7,6 +7,8 @@ public:
 
     void drawSquare(int rect_x, int rect_y, int rect_width, int rect_height, uint32_t color);
 
+    void drawPixel(int posx, int posy, uint32_t color);
+
 private:
     uint32_t* target_buffer = nullptr;
     int buffer_width = 0;
