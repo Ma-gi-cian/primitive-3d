@@ -1,0 +1,3 @@
+/home/jha/workspace/projects/primitive-3d/build/CMakeFiles/primitive-3d.dir
+/home/jha/workspace/projects/primitive-3d/build/CMakeFiles/edit_cache.dir
+/home/jha/workspace/projects/primitive-3d/build/CMakeFiles/rebuild_cache.dir
