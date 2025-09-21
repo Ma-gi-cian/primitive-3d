@@ -133,5 +133,8 @@ void Stage::clearColorBuffer(uint32_t color) {
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
 
+    // yup two square with a single api now  - cool right
     primitives.drawSquare(500, 400, 300, 400, 0xFFFFFF00);
+
+    primitives.drawSquare(200, 200, 200, 300, 0xFF000000);
 }
