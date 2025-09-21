@@ -26,3 +26,24 @@ void draw_grid(){
 ```
 
 Here we are manually manipulating the color_buffer to change the color of the pixels at that particular position.
+
+
+## Draw Square / Rectangle
+
+![Black Square in White Background](images/black_square_white_background.png)
+
+```cpp
+void drawSquare(int posx, int posy, int width, int height, uint32_t color){
+    int beginx = std::max(0, posx);
+    int beginy = std::max(0, posy); 
+
+    int endx = std::min(widow_width, beginx + width);
+    int endy = std::min(window_height, beginy + height);
+
+    for(int y = beginy ; y < endy ; y++){
+        for(int x = beginx; x < endx ; x++){
+            color_buffer[(width * y) + x] = color;
+        }
+    }
+}
+```
