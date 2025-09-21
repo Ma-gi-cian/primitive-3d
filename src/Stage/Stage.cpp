@@ -70,6 +70,8 @@ bool Stage::initialize() {
         return false;
     }
 
+    primitives.setTarget(color_buffer.get(), window_width, window_height);
+
     return true;
 }
 
@@ -131,6 +133,5 @@ void Stage::clearColorBuffer(uint32_t color) {
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
 
-    drawSquare(500, 500, 1400, 1400, 0x00000000);
-
+    primitives.drawSquare(500, 400, 300, 400, 0xFFFFFF00);
 }

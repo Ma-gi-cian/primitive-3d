@@ -1,9 +1,11 @@
-#pragma once // Prevents multiple inclusions of this header
+#pragma once 
+
+#include "../Primitive/Primitive.hpp"
 
 #include <memory>
 #include <cstdint>
 
-// Forward-declare SDL types to keep the SDL header out of our header
+
 struct SDL_Window;
 struct SDL_Renderer;
 struct SDL_Texture;
@@ -36,4 +38,6 @@ private:
     SDL_Texture* texture = nullptr;
 
     std::unique_ptr<uint32_t[]> color_buffer;
+
+    Primitive primitives;
 };

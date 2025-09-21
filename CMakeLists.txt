@@ -14,8 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(SDL2 REQUIRED)
 
 
-file(GLOB_RECURSE SOURCES "src/main.cpp" "src/Stage/Stage.cpp")
-file(GLOB_RECURSE HEADERS "src/*.h", "src/Stage/Stage.hpp")
+file(GLOB_RECURSE SOURCES "src/main.cpp" "src/Stage/Stage.cpp" "src/Primitive/Primitive.cpp")
+file(GLOB_RECURSE HEADERS "src/*.h", "src/Stage/Stage.hpp" "src/Primitive/Primitive.hpp")
 
 # Add an executable target named 'primitive-3d'.
 # The source file for the executable is ./src/main.cpp.
