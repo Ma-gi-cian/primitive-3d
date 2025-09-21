@@ -98,7 +98,7 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-    clearColorBuffer(0xFFFF0000);
+    clearColorBuffer(0xFFFFFFFF);
 }
 
 void Stage::render() {
@@ -109,10 +109,18 @@ void Stage::render() {
     SDL_RenderPresent(renderer);
 }
 
-
+// I need a primitive class for this, maybe a primitive class and then also a 
 void Stage::drawSquare(int posx, int posy, int width , int height, uint32_t color) {
-    for(int y = 0; y < posy + height; y++){
-        for(int x = 0; x < posx + width; x++){
+    // Boundary error and core dump because it is writing outside of the expected space.
+
+    // check if it is not negative or something - so that it does not behave unexpectedly if negative values are given
+    int beginx = std::max(0, posx);
+    int beginy = std::max(0, posy);
+
+    int endx = std::min(window_width, beginx + width);
+    int endy = std::min(window_height, beginy + height);
+    for(int y = beginy; y < endy; y++){
+        for(int x = beginx; x < endx ; x++){
             color_buffer[(window_width * y) + x] = color;
         }
     }
@@ -123,6 +131,6 @@ void Stage::clearColorBuffer(uint32_t color) {
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
 
-    drawSquare(50, 50, 500, 500, 0xFFFFFFFF);
+    drawSquare(500, 500, 1400, 1400, 0x00000000);
 
 }
