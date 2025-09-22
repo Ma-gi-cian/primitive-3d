@@ -1,6 +1,7 @@
 #include "Stage.hpp"
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "../Primitive/Primitive.hpp"
 
 Stage::Stage() {
     is_running = initialize();
@@ -117,12 +118,16 @@ void Stage::clearColorBuffer(uint32_t color) {
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
 
-    // yup two square with a single api now  - cool right
-    primitives.drawSquare(500, 400, 300, 400, 0xFFFFFF00);
+    primitives.drawRectPixels(200,200, 400, 400, 2, 0xFF000000);
+    primitives.drawRectPixels(300, 300, 400, 400, 3, 0xFF00FF00);
 
-    primitives.drawSquare(200, 200, 200, 300, 0xFF000000);
-
-    for(int i = 0; i < 200 ; i++){
-        primitives.drawPixel(200+i, 200, 0xFFFF0000);
+    int pointCount = 0;
+    for(float x = -1; x <= 1; x+=0.25){
+        for(float y = -1; y <= 1; y+=0.25){
+            for(float z = -1; z <= 1; z++) {
+                vec3 newPoint = {.x = x, .y = y, .z = z};
+                cube_points[pointCount++] = newPoint;
+            }
+        }
     }
 }

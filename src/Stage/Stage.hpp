@@ -1,6 +1,8 @@
 #pragma once 
 
+#include "../types.h"
 #include "../Primitive/Primitive.hpp"
+
 
 #include <memory>
 #include <cstdint>
@@ -24,7 +26,9 @@ private:
     void update();              
     void render();           
     void cleanup();          
-
+    
+    static constexpr int num_points = 9 * 9 * 9;
+    vec3 cube_points[num_points];
 
     bool is_running = false;
     int window_width = 800;
@@ -39,4 +43,10 @@ private:
     std::unique_ptr<uint32_t[]> color_buffer;
 
     Primitive primitives;
+
+    typedef struct {
+        vec3 position;
+        vec3 rotation;
+        float fov_angle;
+    } camera;
 };

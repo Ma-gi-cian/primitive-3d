@@ -27,3 +27,19 @@ void Primitive::drawPixel(int posx, int posy, uint32_t color){
         target_buffer[(buffer_width * posy) + posx] = color;
     }
 }
+
+void Primitive::drawRectPixels(int pos_x, int pos_y, int rect_width, int rect_height, int stride, uint32_t color){
+    if (!target_buffer) return;
+
+    int start_x = std::max(0, pos_x);
+    int start_y = std::max(0, pos_y);
+
+    int end_x = std::min(buffer_width, pos_x + rect_width);
+    int end_y = std::min(buffer_height, pos_y + rect_height);
+
+    for(int y = start_y; y < end_y; y += stride){
+        for(int x = start_x; x < end_x ; x += stride){
+            target_buffer[(buffer_width * y) + x] = color;
+        }
+    }
+}
