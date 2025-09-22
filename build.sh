@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm primitive-3d
+
 rm -rf build
 mkdir build
 cd build 
