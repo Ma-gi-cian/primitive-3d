@@ -121,6 +121,8 @@ void Stage::clearColorBuffer(uint32_t color) {
     primitives.drawRectPixels(200,200, 400, 400, 2, 0xFF000000);
     primitives.drawRectPixels(300, 300, 400, 400, 3, 0xFF00FF00);
 
+    primitives.drawBitMap(300, 300);
+
     int pointCount = 0;
     for(float x = -1; x <= 1; x+=0.25){
         for(float y = -1; y <= 1; y+=0.25){

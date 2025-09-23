@@ -1,12 +1,12 @@
 #pragma once
 
 typedef struct {
-	float x; 
-	float y;
-	float z;
+	int x; 
+	int y;
+	int z;
 } vec3;
 
 typedef struct {
-	float x;
-	float y;
+	int x;
+	int y;
 } vec2;

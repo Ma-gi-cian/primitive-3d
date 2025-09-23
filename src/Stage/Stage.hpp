@@ -3,10 +3,8 @@
 #include "../types.h"
 #include "../Primitive/Primitive.hpp"
 
-
 #include <memory>
 #include <cstdint>
-
 
 struct SDL_Window;
 struct SDL_Renderer;
