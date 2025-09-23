@@ -47,3 +47,13 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
     }
 }
 ```
+
+## Draw a bitmap
+
+![Lotus Bitmap from designed by macrovector / Freepik](images/lotus_bitmap.png)
+
+
+## Acknowledgements:
+
+- **Website for image to c conversion:** [https://notisrac.github.io/FileToCArray/](https://notisrac.github.io/FileToCArray/)
+- The lotus bitmap was created from an image designed by **macrovector / Freepik**
