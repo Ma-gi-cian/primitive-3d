@@ -32,6 +32,8 @@ private:
     int window_width = 800;
     int window_height = 800;
 
+    Camera camera;
+
     void clearColorBuffer(uint32_t color);
 
     SDL_Window* window = nullptr;
@@ -42,9 +44,4 @@ private:
 
     Primitive primitives;
 
-    typedef struct {
-        vec3 position;
-        vec3 rotation;
-        float fov_angle;
-    } camera;
 };

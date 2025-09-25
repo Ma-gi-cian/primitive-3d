@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "../Primitive/Primitive.hpp"
+#include <vector>
 
 Stage::Stage() {
     is_running = initialize();
@@ -73,6 +74,10 @@ bool Stage::initialize() {
 
     primitives.setTarget(color_buffer.get(), window_width, window_height);
 
+    camera.fov = 320;
+    camera.position = vec3({0,0,5});
+    camera.rotation = vec3({0,0,0});
+
     return true;
 }
 
@@ -102,6 +107,21 @@ void Stage::processInput() {
 
 void Stage::update() {
     clearColorBuffer(0xFFFFFFFF);
+    
+    std::vector<vec3> indices;
+    for(float x = -1.0; x <= 1.0; x+=0.25) {
+        for(float y = -1.0; y <= 1.0 ; y+=0.25 ){
+            for(float z = -1.0; z < 1.0; z+=0.25){
+                vec3 point = {.x = x, .y = y, .z=z};
+                indices.push_back(point);
+            }
+        }
+    }
+
+
+    for(int i = 0; i < indices.size(); i++){
+        primitives.drawPixel(indices[i], 0xFF000000, camera);
+    }
 }
 
 void Stage::render() {
@@ -118,18 +138,5 @@ void Stage::clearColorBuffer(uint32_t color) {
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
 
-    primitives.drawRectPixels(200,200, 400, 400, 2, 0xFF000000);
-    primitives.drawRectPixels(300, 300, 400, 400, 3, 0xFF00FF00);
-
-    primitives.drawBitMap(300, 300);
-
-    int pointCount = 0;
-    for(float x = -1; x <= 1; x+=0.25){
-        for(float y = -1; y <= 1; y+=0.25){
-            for(float z = -1; z <= 1; z++) {
-                vec3 newPoint = {.x = x, .y = y, .z = z};
-                cube_points[pointCount++] = newPoint;
-            }
-        }
-    }
+    
 }
