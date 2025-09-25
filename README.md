@@ -46,6 +46,11 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
 
 ![Lotus Bitmap from designed by macrovector / Freepik](images/lotus_bitmap.png)
 
+## Points in 3d - like a 3d Square
+
+![Points in 3d](images/points_in_3d.png)
+
+
 
 ## Acknowledgements:
 
