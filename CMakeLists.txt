@@ -8,6 +8,8 @@ project(primitive-3d)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Find the SDL2 library.
 # This command searches for the necessary SDL2 libraries and headers.
 # It sets the SDL2_LIBRARIES variable and makes the SDL2::SDL2 target available.
