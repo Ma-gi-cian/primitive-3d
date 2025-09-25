@@ -14,8 +14,8 @@ float fov = 640;
 vec2 Primitive::project(vec3 points, Camera camera){
     points.z -= camera.position.z;
     vec2 projected_point = {
-        .x = ( points.x * camera.fov ) / points.z + buffer_width / 2,
-        .y = ( points.y * camera.fov ) / points.z + buffer_height / 2
+        .x = ( points.x * camera.fov ) / points.z + static_cast<float>(buffer_width) / 2.0f,
+        .y = ( points.y * camera.fov ) / points.z + static_cast<float>(buffer_height) / 2.0f
     };
     return projected_point;
 }
