@@ -1,3 +1,4 @@
 primitive-3d
 .vscode
 build
+.cache
