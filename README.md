@@ -1,7 +1,12 @@
 # Primitive-3d
 
-This is a repository for learning 3d graphics from an unorthodox method of not using any graphics api like opengl or stuff.
+Primitive-3D is a learning project that explores the fundamentals of 3D computer graphics without relying on modern graphics APIs like OpenGL, Vulkan, or DirectX. Instead of depending on hardware-accelerated pipelines, this project focuses on manually manipulating a color buffer at the pixel level to render shapes, grids, and even 3D-like projections.
 
+The aim is to understand how graphics rendering works at the most basic level—starting from drawing grids and primitive shapes and slowly building toward more complex structures in 3D space.
+
+This project is what we call as software rendered graphics - which is slower than hardware accelerated graphics but provides me and anyone following through the commits of this repo with a good understanding of how 3d graphics works - from the very root - like manipulating each and every pixel level root ( you are at the lowest point ) - this is now graphics or text is written in some of the more unconventional embedded stuff. 
+
+Maybe we can have a website explaining all of it and the resources used after I finish this - yup will do that.
 
 ## Draw Grid:
 

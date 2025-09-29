@@ -1,5 +1,6 @@
 #include "Primitive.hpp"
 #include <algorithm> 
+#include <cmath>
 
 
 void Primitive::setTarget(uint32_t* buffer, int width, int height) {
@@ -11,11 +12,42 @@ void Primitive::setTarget(uint32_t* buffer, int width, int height) {
 ivec3 camera_position = { .x = 0, .y = 0, .z = -5};
 float fov = 640;
 
+vec3 Primitive::vec3_rotate_x(vec3 vertices, float angle){
+    vec3 rotated_vector = {
+        .x = vertices.x,
+        .y = vertices.y * std::cos(angle) - vertices.z * std::sin(angle),
+        .z = vertices.y * std::sin(angle) + vertices.z * std::cos(angle)
+    };
+    return rotated_vector;
+}
+
+vec3 Primitive::vec3_rotate_y(vec3 vertices, float angle){
+    vec3 rotated_vector = {
+        .x = vertices.x * std::cos(angle) - vertices.z * std::sin(angle),
+        .y = vertices.y,
+        .z = vertices.x * std::sin(angle) + vertices.z * std::cos(angle)
+    };
+    return rotated_vector;
+}
+
+vec3 Primitive::vec3_rotate_z(vec3 vertices, float angle) {
+    vec3 rotated_vector = {
+        .x = vertices.x * std::cos(angle) - vertices.y * std::sin(angle),
+        .y = vertices.x * std::sin(angle) + vertices.y * std::cos(angle),
+        .z = vertices.z
+    };
+    return rotated_vector;
+}
+
 vec2 Primitive::project(vec3 points, Camera camera){
-    points.z -= camera.position.z;
+    vec3 rotation = camera.rotation;
+    vec3 rotated_points_x = vec3_rotate_x(points, rotation.x);
+    vec3 rotated_points_y = vec3_rotate_y(rotated_points_x, rotation.y);
+    vec3 rotated_points = vec3_rotate_z(rotated_points_y, rotation.z);
+    rotated_points.z -= camera.position.z;
     vec2 projected_point = {
-        .x = ( points.x * camera.fov ) / points.z + static_cast<float>(buffer_width) / 2.0f,
-        .y = ( points.y * camera.fov ) / points.z + static_cast<float>(buffer_height) / 2.0f
+        .x = ( rotated_points.x * camera.fov ) / rotated_points.z + static_cast<float>(buffer_width) / 2.0f,
+        .y = ( rotated_points.y * camera.fov ) / rotated_points.z + static_cast<float>(buffer_height) / 2.0f
     };
     return projected_point;
 }

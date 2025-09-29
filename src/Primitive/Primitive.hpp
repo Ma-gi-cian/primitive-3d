@@ -19,8 +19,12 @@ public:
 
     // void drawBitMap(int startx, int starty);
     
-    static const uint32_t bitmap[128 * 128];
- 
+    vec3 vec3_rotate_x(vec3 v, float angle);
+    // this function will make it rotate across the y axis
+    vec3 vec3_rotate_y(vec3 v, float angle);
+    // this function will make it rotate across the z axis
+    vec3 vec3_rotate_z(vec3 v, float angle);
+
 private:
     uint32_t* target_buffer = nullptr;
     int buffer_width = 0;

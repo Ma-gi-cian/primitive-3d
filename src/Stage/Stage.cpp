@@ -1,4 +1,5 @@
 #include "Stage.hpp"
+#include <SDL_video.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 #include "../Primitive/Primitive.hpp"
@@ -41,7 +42,7 @@ bool Stage::initialize() {
         SDL_WINDOWPOS_CENTERED,
         window_width,
         window_height,
-        SDL_WINDOW_BORDERLESS
+        SDL_WINDOW_RESIZABLE
     );
     if (!window) {
         std::cerr << "Failed to create SDL window: " << SDL_GetError() << std::endl;
@@ -106,8 +107,12 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-    clearColorBuffer(0xFFFFFFFF);
-    
+    clearColorBuffer(0xFF000000);
+
+    camera.rotation.x += 0.01;
+    camera.rotation.y += 0.01;
+    camera.rotation.z += 0.01;
+
     std::vector<vec3> indices;
     for(float x = -1.0; x <= 1.0; x+=0.25) {
         for(float y = -1.0; y <= 1.0 ; y+=0.25 ){
@@ -120,7 +125,7 @@ void Stage::update() {
 
 
     for(int i = 0; i < indices.size(); i++){
-        primitives.drawPixel(indices[i], 0xFF000000, camera);
+        primitives.drawPixel(indices[i], 0xFFFFFFFF, camera);
     }
 }
 
@@ -137,6 +142,5 @@ void Stage::clearColorBuffer(uint32_t color) {
     if (!color_buffer) return;
     
     std::fill(color_buffer.get(), color_buffer.get() + (window_width * window_height), color);
-
     
 }
