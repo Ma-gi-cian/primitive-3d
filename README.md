@@ -56,6 +56,9 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
 ![Points in 3d](images/points_in_3d.png)
 
 
+## Spinning Cube
+![Spinning Cube](images/Spinning-cube.gif)
+
 
 ## Acknowledgements:
 
