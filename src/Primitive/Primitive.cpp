@@ -70,8 +70,7 @@ void Primitive::drawSquare(int rect_x, int rect_y, int rect_width, int rect_heig
 
     for (int y = start_y; y < end_y; y++) {
         for (int x = start_x; x < end_x; x++) {
-            vec2 point = project(vec3{static_cast<float>(x), static_cast<float>(y), 0}, {0, 0, -5.0});
-            drawPixel(point.x, point.y, color);
+            drawPixel(x, y, color);
         }
     }
 }

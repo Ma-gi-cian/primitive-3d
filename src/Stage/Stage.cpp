@@ -107,7 +107,7 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-    clearColorBuffer(0xFF000000);
+    clearColorBuffer(0xFF00FF00);
 
     camera.rotation.x += 0.01;
     camera.rotation.y += 0.01;
@@ -123,9 +123,11 @@ void Stage::update() {
         }
     }
 
+    primitives.drawSquare(40, 40, 300, 500, 0xFFFF0000);
+
 
     for(int i = 0; i < indices.size(); i++){
-        primitives.drawPixel(indices[i], 0xFFFFFFFF, camera);
+        primitives.drawPixel(indices[i], 0xFF000000, camera);
     }
 }
 
