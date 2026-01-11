@@ -65,4 +65,5 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
 - Pikuma 3d Computer graphics course : [https://github.com/pr0g/pikuma-3d-graphics](https://github.com/pr0g/pikuma-3d-graphics) - highly recommended
 - Hoff._world video on [How to write a display driver from start to finish](https://www.youtube.com/watch?v=5cp2iPGWmUY)
 - **Website for image to c conversion:** [https://notisrac.github.io/FileToCArray/](https://notisrac.github.io/FileToCArray/)
+- [Collision Detection Video from VertoStudio3d](http://youtube.com/watch?v=wVhSQHKvBW4)
 - The lotus bitmap was created from an image designed by **macrovector / Freepik**

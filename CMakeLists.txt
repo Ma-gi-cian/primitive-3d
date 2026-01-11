@@ -16,8 +16,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(SDL2 REQUIRED)
 
 
-file(GLOB_RECURSE SOURCES "src/main.cpp" "src/Stage/Stage.cpp" "src/Primitive/Primitive.cpp")
-file(GLOB_RECURSE HEADERS "src/*.h", "src/Stage/Stage.hpp" "src/Primitive/Primitive.hpp")
+file(
+    GLOB_RECURSE 
+    SOURCES 
+    "src/main.cpp" "src/Stage/Stage.cpp" "src/Primitive/Primitive.cpp" "src/mesh.cpp" "src/Triangle/Triangle.cpp"
+    )
+file(GLOB_RECURSE HEADERS "src/*.h", "src/Stage/Stage.hpp" "src/Primitive/Primitive.hpp", "src/mesh.hpp", "src/Triangle/Triangle.hpp")
 
 # Add an executable target named 'primitive-3d'.
 # The source file for the executable is ./src/main.cpp.
