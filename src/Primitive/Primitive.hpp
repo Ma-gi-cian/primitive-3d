@@ -12,6 +12,8 @@ public:
     void drawPixel(ivec3 point, uint32_t color, Camera camera);
     void drawPixel(vec3 point, uint32_t color, Camera camera);
 
+    void drawLine(vec3 point1, vec3 point2, uint32_t color, Camera camera);
+
     void drawRectPixels(int posx, int posy, int rect_width, int rect_height, int stride, uint32_t color);
 
     vec2 project(vec3 points, Camera camera);

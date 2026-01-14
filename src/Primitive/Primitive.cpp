@@ -39,6 +39,37 @@ vec3 Primitive::vec3_rotate_z(vec3 vertices, float angle) {
   return rotated_vector;
 }
 
+vec2 Primitive::project(vec3 world_point, Camera camera) {
+  // 1:First transform from world space to camera space
+  // Translate point relative to camera position
+  vec3 relative_point = {
+      .x = world_point.x - camera.position.x,
+      .y = world_point.y - camera.position.y,
+      .z = world_point.z - camera.position.z
+  };
+
+  // 2: apply camera rotation (inverse rotations in reverse order)
+  // Camera rotation means we rotate the world in the OPPOSITE direction
+  vec3 rotated_z = vec3_rotate_z(relative_point, -camera.rotation.z);
+  vec3 rotated_y = vec3_rotate_y(rotated_z, -camera.rotation.y);
+  vec3 rotated_x = vec3_rotate_x(rotated_y, -camera.rotation.x);
+
+  // 3: Perspective projection
+  // Prevent division by zero or negative Z
+  if (rotated_x.z <= 0.1f) {
+    return {.x = -1, .y = -1}; // Return invalid point (clip it later)
+  }
+
+  vec2 projected_point = {
+      .x = (rotated_x.x * camera.fov) / rotated_x.z +
+           static_cast<float>(buffer_width) / 2.0f,
+      .y = (rotated_x.y * camera.fov) / rotated_x.z +
+           static_cast<float>(buffer_height) / 2.0f
+  };
+
+  return projected_point;
+}
+
 vec2 Primitive::project(vec3 points, Camera camera) {
   vec3 rotation = camera.rotation;
   vec3 rotated_points_x = vec3_rotate_x(points, rotation.x);
@@ -91,6 +122,10 @@ void Primitive::drawPixel(ivec3 point, uint32_t color, Camera camera) {
 
 void Primitive::drawPixel(vec3 point, uint32_t color, Camera camera) {
   vec2 points = project(point, camera);
+
+  if (points.x < 0 || points.y < 0){
+    return;
+  }
   if (points.x >= 0 && points.y >= 0 && points.x < buffer_width &&
       points.y < buffer_height) {
     target_buffer[(buffer_width * static_cast<int>(points.y)) +
@@ -108,6 +143,10 @@ void Primitive::drawRectPixels(int pos_x, int pos_y, int rect_width,
 
   int end_x = std::min(buffer_width, pos_x + rect_width);
   int end_y = std::min(buffer_height, pos_y + rect_height);
+}
+
+void Primitive::drawLine(vec3 point1, vec3 point2, uint32_t color, Camera camera){
+
 }
 
 // void Primitive::drawBitMap(int startx, int starty){

@@ -1,3 +1,4 @@
+#include "../types.h"
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
@@ -7,4 +8,8 @@ typedef struct {
   int c;
 } face_t;
 
+typedef struct {
+  vec2 points[3];
+  
+} triangle_t;
 #endif

@@ -60,6 +60,26 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
 ![Spinning Cube](images/Spinning-cube.gif)
 
 
+## Limitations:
+
+This is a list of limitation that I encountered while implementing it and the solution or what I have though on using as a solution to it:
+
+1. **Visibility Problem:** 
+
+    - The current rendering is order dependent. The renderer draws objects in the exact sequence they appear in the update loop.
+
+    - This is creates a last in win system, if a rectangle is drawn after a circle, the rectangle will appear on top even if it is to be further from the camera.
+
+    - The color buffer only keeps track of the pixels and not distance between the objects that those pixels represent.
+
+    Current Solution: Painter's Algorithm - (this was used in the doom engine)
+
+
+<!--
+| Problem | Description | Solution Approach | Status |
+|---------|-------------|-------------------|--------|
+|**1. Hidden Surface Problem**| Stack like rendering  
+-->
 ## Acknowledgements:
 
 - Pikuma 3d Computer graphics course : [https://github.com/pr0g/pikuma-3d-graphics](https://github.com/pr0g/pikuma-3d-graphics) - highly recommended

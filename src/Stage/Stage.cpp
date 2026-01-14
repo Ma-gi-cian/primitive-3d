@@ -67,7 +67,7 @@ bool Stage::initialize() {
   primitives.setTarget(color_buffer.get(), window_width, window_height);
 
   camera.fov = 320;
-  camera.position = vec3({0, 0, 5});
+  camera.position = vec3({0, 0, -5});
   camera.rotation = vec3({0, 0, 0});
 
   return true;
@@ -100,8 +100,9 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-  clearColorBuffer(0xFF000000);
+  clearColorBuffer(0xFF000000); // clears 
 
+  // this is the cameras rotation - the world does not rotate the camera does
   camera.rotation.x += 0.01;
   camera.rotation.y += 0.01;
   camera.rotation.z += 0.01;
