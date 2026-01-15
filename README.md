@@ -59,6 +59,28 @@ void drawSquare(int posx, int posy, int width, int height, uint32_t color){
 ## Spinning Cube
 ![Spinning Cube](images/Spinning-cube.gif)
 
+## Drawing Line
+![]
+
+```cpp
+// Bresenham Line Algorithm (standard efficient algorithm): https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+void Primitive::drawLine(vec2 point1, vec2 point2, uint32_t color) {
+  float dx = point2.x - point1.x;
+  float dy = point2.y - point1.y;
+  float D = 2 * dy - dx;
+  float y = point1.y;
+
+  for (float i = point1.x; i < point2.x; i++) {
+    drawPixel(i, y, color);
+    if (D > 0) {
+      y = y + 1;
+      D = D + (2 * (dy - dx));
+    } else {
+      D = D + 2 * dy;
+    }
+  }
+}
+```
 
 ## Limitations:
 

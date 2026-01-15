@@ -1,7 +1,7 @@
 #include "Primitive.hpp"
 #include <algorithm>
 #include <cmath>
-
+#include <iostream>
 /*
  * This file mainly deals with points and their transformation.
  */
@@ -39,36 +39,37 @@ vec3 Primitive::vec3_rotate_z(vec3 vertices, float angle) {
   return rotated_vector;
 }
 
-vec2 Primitive::project(vec3 world_point, Camera camera) {
-  // 1:First transform from world space to camera space
-  // Translate point relative to camera position
-  vec3 relative_point = {
-      .x = world_point.x - camera.position.x,
-      .y = world_point.y - camera.position.y,
-      .z = world_point.z - camera.position.z
-  };
+// TODO:
+//  vec2 Primitive::project(vec3 world_point, Camera camera) {
+//    // 1:First transform from world space to camera space
+//    // Translate point relative to camera position
+//    vec3 relative_point = {
+//        .x = world_point.x - camera.position.x,
+//        .y = world_point.y - camera.position.y,
+//        .z = world_point.z - camera.position.z
+//    };
 
-  // 2: apply camera rotation (inverse rotations in reverse order)
-  // Camera rotation means we rotate the world in the OPPOSITE direction
-  vec3 rotated_z = vec3_rotate_z(relative_point, -camera.rotation.z);
-  vec3 rotated_y = vec3_rotate_y(rotated_z, -camera.rotation.y);
-  vec3 rotated_x = vec3_rotate_x(rotated_y, -camera.rotation.x);
+//   // 2: apply camera rotation (inverse rotations in reverse order)
+//   // Camera rotation means we rotate the world in the OPPOSITE direction
+//   vec3 rotated_z = vec3_rotate_z(relative_point, -camera.rotation.z);
+//   vec3 rotated_y = vec3_rotate_y(rotated_z, -camera.rotation.y);
+//   vec3 rotated_x = vec3_rotate_x(rotated_y, -camera.rotation.x);
 
-  // 3: Perspective projection
-  // Prevent division by zero or negative Z
-  if (rotated_x.z <= 0.1f) {
-    return {.x = -1, .y = -1}; // Return invalid point (clip it later)
-  }
+//   // 3: Perspective projection
+//   // Prevent division by zero or negative Z
+//   if (rotated_x.z <= 0.1f) {
+//     return {.x = -1, .y = -1}; // Return invalid point (clip it later)
+//   }
 
-  vec2 projected_point = {
-      .x = (rotated_x.x * camera.fov) / rotated_x.z +
-           static_cast<float>(buffer_width) / 2.0f,
-      .y = (rotated_x.y * camera.fov) / rotated_x.z +
-           static_cast<float>(buffer_height) / 2.0f
-  };
+//   vec2 projected_point = {
+//       .x = (rotated_x.x * camera.fov) / rotated_x.z +
+//            static_cast<float>(buffer_width) / 2.0f,
+//       .y = (rotated_x.y * camera.fov) / rotated_x.z +
+//            static_cast<float>(buffer_height) / 2.0f
+//   };
 
-  return projected_point;
-}
+//   return projected_point;
+// }
 
 vec2 Primitive::project(vec3 points, Camera camera) {
   vec3 rotation = camera.rotation;
@@ -123,7 +124,7 @@ void Primitive::drawPixel(ivec3 point, uint32_t color, Camera camera) {
 void Primitive::drawPixel(vec3 point, uint32_t color, Camera camera) {
   vec2 points = project(point, camera);
 
-  if (points.x < 0 || points.y < 0){
+  if (points.x < 0 || points.y < 0) {
     return;
   }
   if (points.x >= 0 && points.y >= 0 && points.x < buffer_width &&
@@ -145,9 +146,49 @@ void Primitive::drawRectPixels(int pos_x, int pos_y, int rect_width,
   int end_y = std::min(buffer_height, pos_y + rect_height);
 }
 
-void Primitive::drawLine(vec3 point1, vec3 point2, uint32_t color, Camera camera){
+// Bresenham Line Algorithm (standard efficient algorithm):
+// https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+void Primitive::drawLine(vec2 point1, vec2 point2, uint32_t color) {
+  float dx = point2.x - point1.x;
+  float dy = point2.y - point1.y;
+  float D = 2 * dy - dx;
+  float y = point1.y;
 
+  std::cout << "dx : " << dx << " dy : " << dy << " D: " << D << " y: " << y
+            << std::endl;
+
+  for (float i = point1.x; i < point2.x; i++) {
+    drawPixel(i, y, color);
+    if (D > 0) {
+      y = y + 1;
+      D = D + (2 * (dy - dx));
+    } else {
+      D = D + 2 * dy;
+    }
+  }
 }
+
+void Primitive::drawLine_dda(vec2 point1, vec2 point2, uint32_t color) {
+  int delta_x = (point2.x - point1.x);
+  int delta_y = (point2.y - point1.x);
+
+  int longest_side_length =
+      (abs(delta_x) >= abs(delta_y)) ? abs(delta_x) : abs(delta_y);
+
+  float x_inc = delta_x / (float)longest_side_length;
+  float y_inc = delta_y / (float)longest_side_length;
+
+  float current_x = point1.x;
+  float current_y = point1.y;
+  for (int i = 0; i <= longest_side_length; i++) {
+    drawPixel(round(current_x), round(current_y), color);
+    current_x += x_inc;
+    current_y += y_inc;
+  }
+}
+
+void Primitive::drawLine(vec3 point1, vec3 point2, uint32_t color,
+                         Camera camera) {}
 
 // void Primitive::drawBitMap(int startx, int starty){
 //     for(int y=0; y < 128; y++){

@@ -37,6 +37,8 @@ bool Stage::initialize() {
   window = SDL_CreateWindow("Software Renderer", SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED, window_width, window_height,
                             SDL_WINDOW_RESIZABLE);
+
+  std::cout << window_width << " " << window_height << std::endl;
   if (!window) {
     std::cerr << "Failed to create SDL window: " << SDL_GetError() << std::endl;
     return false;
@@ -100,7 +102,7 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-  clearColorBuffer(0xFF000000); // clears 
+  clearColorBuffer(0xFF000000); // clears
 
   // this is the cameras rotation - the world does not rotate the camera does
   camera.rotation.x += 0.01;
@@ -120,28 +122,34 @@ void Stage::update() {
     }
   }
 
-  primitives.drawSquare(40, 40, 300, 500, 0xFFFF0000);
+  primitives.drawLine(
+      vec2({10, 10}),
+      vec2({(float)Stage::window_width, (float)Stage::window_height}),
+      0xFFFF0000);
+
+  primitives.drawLine(vec2({0, (float)Stage::window_height}),
+                      vec2({(float)Stage::window_width, 0}), 0xFFFF0000);
 }
 
-  /*
-  std::vector<vec3> indices;
-  for(float x = -1.0; x <= 1.0; x+=0.25) {
-      for(float y = -1.0; y <= 1.0 ; y+=0.25 ){
-          for(float z = -1.0; z < 1.0; z+=0.25){
-              vec3 point = {.x = x, .y = y, .z=z};
-              indices.push_back(point);
-          }
-      }
-  }
+/*
+std::vector<vec3> indices;
+for(float x = -1.0; x <= 1.0; x+=0.25) {
+    for(float y = -1.0; y <= 1.0 ; y+=0.25 ){
+        for(float z = -1.0; z < 1.0; z+=0.25){
+            vec3 point = {.x = x, .y = y, .z=z};
+            indices.push_back(point);
+        }
+    }
+}
 
-  //
+//
 
 
-  for(int i = 0; i < indices.size(); i++){
-      primitives.drawPixel(indices[i], 0xFF000000, camera);
-  }
+for(int i = 0; i < indices.size(); i++){
+    primitives.drawPixel(indices[i], 0xFF000000, camera);
+}
 
-   */
+ */
 
 void Stage::render() {
   SDL_UpdateTexture(texture, NULL, color_buffer.get(),
