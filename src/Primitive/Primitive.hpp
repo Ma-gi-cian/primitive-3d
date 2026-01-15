@@ -1,6 +1,7 @@
 #pragma once
 #include "../types.h"
 #include <cstdint>
+#include <vector>
 
 class Primitive {
 public:
@@ -19,6 +20,8 @@ public:
 
   void drawRectPixels(int posx, int posy, int rect_width, int rect_height,
                       int stride, uint32_t color);
+
+  void drawTriangle(std::vector<vec2> points, uint32_t color);
 
   vec2 project(vec3 points, Camera camera);
   ivec2 project(ivec3 points, Camera camera);

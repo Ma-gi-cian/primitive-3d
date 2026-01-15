@@ -122,6 +122,12 @@ void Stage::update() {
     }
   }
 
+  std::vector<vec2> points = {{300, 300}, {600, 300}, {500, 500}};
+
+  primitives.drawTriangle(points, 0xFF00FF00);
+
+  // primitives.drawLine({300, 300}, {900, 300}, 0xFF00FF00);
+
   primitives.drawLine(
       vec2({10, 10}),
       vec2({(float)Stage::window_width, (float)Stage::window_height}),

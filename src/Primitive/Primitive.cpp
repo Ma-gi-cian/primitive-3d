@@ -39,7 +39,7 @@ vec3 Primitive::vec3_rotate_z(vec3 vertices, float angle) {
   return rotated_vector;
 }
 
-// TODO:
+// TODO: Complete world coordinate conversion required - not done yet
 //  vec2 Primitive::project(vec3 world_point, Camera camera) {
 //    // 1:First transform from world space to camera space
 //    // Translate point relative to camera position
@@ -199,6 +199,22 @@ void Primitive::drawLine_dda(vec2 point1, vec2 point2, uint32_t color) {
 
 void Primitive::drawLine(vec3 point1, vec3 point2, uint32_t color,
                          Camera camera) {}
+
+void Primitive::drawTriangle(std::vector<vec2> points, uint32_t color) {
+  if (points.size() != 3) {
+    std::cerr << "Three points should be given. " << points.size()
+              << " were provided" << std::endl;
+    return;
+  }
+
+  vec2 point_1 = points[0];
+  vec2 point_2 = points[1];
+  vec2 point_3 = points[2];
+
+  drawLine(point_1, point_2, color);
+  drawLine(point_1, point_3, color);
+  drawLine(point_2, point_3, color);
+}
 
 // void Primitive::drawBitMap(int startx, int starty){
 //     for(int y=0; y < 128; y++){
