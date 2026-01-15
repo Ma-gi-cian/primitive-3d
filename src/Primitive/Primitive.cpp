@@ -146,8 +146,6 @@ void Primitive::drawRectPixels(int pos_x, int pos_y, int rect_width,
   int end_y = std::min(buffer_height, pos_y + rect_height);
 }
 
-// Bresenham Line Algorithm (standard efficient algorithm):
-// https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
 void Primitive::drawLine(vec2 point1, vec2 point2, uint32_t color) {
   int x0 = static_cast<int>(point1.x);
   int y0 = static_cast<int>(point1.y);
@@ -197,8 +195,38 @@ void Primitive::drawLine_dda(vec2 point1, vec2 point2, uint32_t color) {
   }
 }
 
-void Primitive::drawLine(vec3 point1, vec3 point2, uint32_t color,
-                         Camera camera) {}
+void Primitive::drawLine(vec3 p1, vec3 p2, uint32_t color, Camera camera) {
+  vec2 point1 = project(p1, camera);
+  vec2 point2 = project(p2, camera);
+  int x0 = static_cast<int>(point1.x);
+  int y0 = static_cast<int>(point1.y);
+  int x1 = static_cast<int>(point2.x);
+  int y1 = static_cast<int>(point2.y);
+
+  bool steep = std::abs(x0 - x1) < std::abs(y0 - y1);
+
+  if (steep) {
+    std::swap(x0, y0);
+    std::swap(x1, y1);
+  }
+
+  if (x0 > x1) {
+    std::swap(x0, x1);
+    std::swap(y0, y1);
+  }
+
+  for (int x = x0; x <= x1; x++) {
+    float t = (x1 == x0) ? 1.0f : (x - x0) / (float)(x1 - x0);
+
+    int y = std::round(y0 * (1.0f - t) + y1 * t);
+
+    if (steep) {
+      drawPixel(y, x, color);
+    } else {
+      drawPixel(x, y, color);
+    }
+  }
+}
 
 void Primitive::drawTriangle(std::vector<vec2> points, uint32_t color) {
   if (points.size() != 3) {
@@ -214,6 +242,23 @@ void Primitive::drawTriangle(std::vector<vec2> points, uint32_t color) {
   drawLine(point_1, point_2, color);
   drawLine(point_1, point_3, color);
   drawLine(point_2, point_3, color);
+}
+
+void Primitive::drawTriangle(std::vector<vec3> points, uint32_t color,
+                             Camera camera) {
+  if (points.size() != 3) {
+    std::cerr << "Three points should be given. " << points.size()
+              << " were provided" << std::endl;
+    return;
+  }
+
+  vec3 point_1 = points[0];
+  vec3 point_2 = points[1];
+  vec3 point_3 = points[2];
+
+  drawLine(point_1, point_2, color, camera);
+  drawLine(point_1, point_3, color, camera);
+  drawLine(point_2, point_3, color, camera);
 }
 
 // void Primitive::drawBitMap(int startx, int starty){

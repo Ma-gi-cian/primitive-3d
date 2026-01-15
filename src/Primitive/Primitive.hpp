@@ -22,6 +22,7 @@ public:
                       int stride, uint32_t color);
 
   void drawTriangle(std::vector<vec2> points, uint32_t color);
+  void drawTriangle(std::vector<vec3> points, uint32_t color, Camera camera);
 
   vec2 project(vec3 points, Camera camera);
   ivec2 project(ivec3 points, Camera camera);

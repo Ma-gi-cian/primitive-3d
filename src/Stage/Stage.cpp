@@ -102,7 +102,7 @@ void Stage::processInput() {
 }
 
 void Stage::update() {
-  clearColorBuffer(0xFF000000); // clears
+  clearColorBuffer(0xFFFFFFFF); // clears
 
   // this is the cameras rotation - the world does not rotate the camera does
   camera.rotation.x += 0.01;
@@ -117,24 +117,28 @@ void Stage::update() {
     face_vertices[1] = mesh_vertices[mesh_face.b - 1];
     face_vertices[2] = mesh_vertices[mesh_face.c - 1];
 
+    std::vector<vec3> points;
+
     for (int j = 0; j < 3; j++) {
-      primitives.drawPixel(face_vertices[j], 0xFFFFFFFF, camera);
+      points.push_back(face_vertices[j]);
     }
+
+    primitives.drawTriangle(points, 0xFF000000, camera);
   }
 
-  std::vector<vec2> points = {{300, 300}, {600, 300}, {500, 500}};
+  // std::vector<vec2> points = {{300, 300}, {}, {500, 500}};
 
-  primitives.drawTriangle(points, 0xFF00FF00);
+  // primitives.drawTriangle(points, 0xFF00FF00);
 
-  // primitives.drawLine({300, 300}, {900, 300}, 0xFF00FF00);
+  // // primitives.drawLine({300, 300}, {900, 300}, 0xFF00FF00);
 
-  primitives.drawLine(
-      vec2({10, 10}),
-      vec2({(float)Stage::window_width, (float)Stage::window_height}),
-      0xFFFF0000);
+  // primitives.drawLine(
+  //     vec2({10, 10}),
+  //     vec2({(float)Stage::window_width, (float)Stage::window_height}),
+  //     0xFFFF0000);
 
-  primitives.drawLine(vec2({0, (float)Stage::window_height}),
-                      vec2({(float)Stage::window_width, 0}), 0xFFFF0000);
+  // primitives.drawLine(vec2({0, (float)Stage::window_height}),
+  //                     vec2({(float)Stage::window_width, 0}), 0xFFFF0000);
 }
 
 /*

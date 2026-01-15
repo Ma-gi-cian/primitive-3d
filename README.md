@@ -91,6 +91,10 @@ void Primitive::drawLine(vec2 point1, vec2 point2, uint32_t color) {
 }
 ```
 
+## WireFrame Cube
+
+![Spinning WireFrame cube](images/Cube_wireframe.mp4)
+
 ## Limitations:
 
 This is a list of limitation that I encountered while implementing it and the solution or what I have though on using as a solution to it:
