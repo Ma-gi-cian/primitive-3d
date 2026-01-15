@@ -149,25 +149,35 @@ void Primitive::drawRectPixels(int pos_x, int pos_y, int rect_width,
 // Bresenham Line Algorithm (standard efficient algorithm):
 // https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
 void Primitive::drawLine(vec2 point1, vec2 point2, uint32_t color) {
-  float dx = point2.x - point1.x;
-  float dy = point2.y - point1.y;
-  float D = 2 * dy - dx;
-  float y = point1.y;
+  int x0 = static_cast<int>(point1.x);
+  int y0 = static_cast<int>(point1.y);
+  int x1 = static_cast<int>(point2.x);
+  int y1 = static_cast<int>(point2.y);
 
-  std::cout << "dx : " << dx << " dy : " << dy << " D: " << D << " y: " << y
-            << std::endl;
+  bool steep = std::abs(x0 - x1) < std::abs(y0 - y1);
 
-  for (float i = point1.x; i < point2.x; i++) {
-    drawPixel(i, y, color);
-    if (D > 0) {
-      y = y + 1;
-      D = D + (2 * (dy - dx));
+  if (steep) {
+    std::swap(x0, y0);
+    std::swap(x1, y1);
+  }
+
+  if (x0 > x1) {
+    std::swap(x0, x1);
+    std::swap(y0, y1);
+  }
+
+  for (int x = x0; x <= x1; x++) {
+    float t = (x1 == x0) ? 1.0f : (x - x0) / (float)(x1 - x0);
+
+    int y = std::round(y0 * (1.0f - t) + y1 * t);
+
+    if (steep) {
+      drawPixel(y, x, color);
     } else {
-      D = D + 2 * dy;
+      drawPixel(x, y, color);
     }
   }
 }
-
 void Primitive::drawLine_dda(vec2 point1, vec2 point2, uint32_t color) {
   int delta_x = (point2.x - point1.x);
   int delta_y = (point2.y - point1.x);
